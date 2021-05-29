@@ -5,6 +5,12 @@ from os import system
 mouse = Controller()
 
 
+def disable_microphone():
+    print('Disabling microphone...')
+    system(
+        'echo "from talon_plugins import speech; speech.microphone.manager.set_microphone(mic=None);"| ~/.talon/bin/repl')
+
+
 def toggle_eye_tracking():
     print('Toggling eye tracking...')
     system('echo "from talon_plugins import eye_mouse; eye_mouse.control_mouse.toggle();"| ~/.talon/bin/repl')
@@ -40,6 +46,8 @@ key_combinations = {'<ctrl>+<alt>+1': toggle_eye_tracking,
                     '<ctrl>+<alt>+<page_up>': scroll_up,
                     '<ctrl>+<alt>+<page_down>': scroll_down
                     }
+
+disable_microphone()
 
 with keyboard.GlobalHotKeys(key_combinations) as hotkey:
     hotkey.join()
