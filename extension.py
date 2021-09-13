@@ -1,24 +1,37 @@
+import platform
 from pynput import keyboard
 from pynput.mouse import Controller, Button
-from os import system
+from os import system, environ
+from subprocess import run
 
 mouse = Controller()
+
+home_directory = '{}\\AppData\\Roaming\\talon\\.venv\\Scripts\\repl.bat'.format(
+    environ.get('USERPROFILE')) if platform.system() == 'Windows' else '~/.talon/bin/repl'
+
+
+def run_talon_command(command: str, repl_home: str):
+    if platform.system() == 'Windows':
+        run(repl_home, text=True, input=command)
+
+    if platform.system() == 'Linux':
+        system('echo "{}"| {}'.format(command, home_directory))
 
 
 def disable_microphone():
     print('Disabling microphone...')
-    system(
-        'echo "from talon_plugins import speech; speech.microphone.manager.set_microphone(mic=None);"| ~/.talon/bin/repl')
+    run_talon_command('from talon_plugins import speech; speech.actions.sound.set_microphone(name=\'None\');',
+                      home_directory)
 
 
 def toggle_eye_tracking():
     print('Toggling eye tracking...')
-    system('echo "from talon_plugins import eye_mouse; eye_mouse.control_mouse.toggle();"| ~/.talon/bin/repl')
+    run_talon_command('from talon_plugins import eye_mouse; eye_mouse.control_mouse.toggle();', home_directory)
 
 
 def calibrate():
     print('Calibrating...')
-    system('echo "from talon_plugins import eye_mouse; eye_mouse.calib_start()"| ~/.talon/bin/repl')
+    run_talon_command('from talon_plugins import eye_mouse; eye_mouse.calib_start()', home_directory)
 
 
 def left_click():
