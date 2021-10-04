@@ -54,7 +54,7 @@ def scroll_down():
     mouse.scroll(0, -4)
 
 
-key_combinations = {'<ctrl>+<alt>+1': toggle_eye_tracking,
+key_combinations = {'<ctrl>+<alt>+<shift>+q': toggle_eye_tracking,
                     '<ctrl>+<alt>+2': calibrate,
                     }
 
