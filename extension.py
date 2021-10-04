@@ -55,7 +55,7 @@ def scroll_down():
 
 
 key_combinations = {'<ctrl>+<alt>+<shift>+q': toggle_eye_tracking,
-                    '<ctrl>+<alt>+2': calibrate,
+                    '<ctrl>+<alt>+<shift>+w': calibrate,
                     }
 
 disable_microphone()
